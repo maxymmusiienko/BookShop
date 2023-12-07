@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>book_shop</artifactId>
+    <artifactId>BookShop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>book_shop</name>
-    <description>book_shop</description>
+    <name>BookShop</name>
+    <description>BookShop</description>
     <properties>
         <java.version>17</java.version>
         <maven.checkstyle.plugin.configLocation>checkstyle.xml</maven.checkstyle.plugin.configLocation>
