@@ -54,7 +54,7 @@ public class BookRepositoryImpl implements BookRepository {
             Query<Book> query = session.createQuery("FROM Book", Book.class);
             return query.list();
         } catch (Exception e) {
-            throw new RuntimeException("Error while getting all users", e);
+            throw new RuntimeException("Error while getting all the books", e);
         } finally {
             if (session != null) {
                 session.close();

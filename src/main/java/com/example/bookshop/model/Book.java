@@ -6,7 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
+import lombok.Data;
 
+@Data
 @Entity
 public class Book {
     @Id
@@ -32,94 +34,16 @@ public class Book {
     public Book() {
     }
 
-    public Book(Long id, String title, String author,
-                String isbn, BigDecimal price, String description, String coverImage) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.price = price;
-        this.description = description;
-        this.coverImage = coverImage;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCoverImage() {
-        return coverImage;
-    }
-
-    public void setCoverImage(String coverImage) {
-        this.coverImage = coverImage;
-    }
-
     @Override
     public String toString() {
-        return "Book{" + "id="
-                + id
-                + ", title='"
-                + title
-                + '\''
-                + ", author='"
-                + author
-                + '\''
-                + ", isbn='"
-                + isbn
-                + '\''
-                + ", price="
-                + price
-                + ", description='"
-                + description
-                + '\''
-                + ", coverImage='"
-                + coverImage
-                + '\''
-                + "} ";
+        StringBuilder result = new StringBuilder("Book{");
+        result.append("id=").append(id).append(", title='").append(title)
+                .append('\'').append(", author='").append(author)
+                .append('\'').append(", isbn='").append(isbn)
+                .append('\'').append(", price=").append(price)
+                .append(", description='").append(description)
+                .append('\'').append(", coverImage='").append(coverImage)
+                .append('\'').append("} ");
+        return result.toString();
     }
 }
