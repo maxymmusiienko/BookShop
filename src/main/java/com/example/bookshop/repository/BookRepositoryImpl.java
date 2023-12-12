@@ -2,6 +2,8 @@ package com.example.bookshop.repository;
 
 import com.example.bookshop.model.Book;
 import java.util.List;
+import java.util.Optional;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -54,6 +56,22 @@ public class BookRepositoryImpl implements BookRepository {
             return query.list();
         } catch (Exception e) {
             throw new RuntimeException("Error while getting all users", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        Session session = null;
+
+        try {
+            session = sessionFactory.openSession();
+            return Optional.ofNullable(session.get(Book.class, id));
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Can`t get book from DB, ", e);
         } finally {
             if (session != null) {
                 session.close();
