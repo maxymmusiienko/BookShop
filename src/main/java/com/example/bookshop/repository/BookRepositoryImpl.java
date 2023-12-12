@@ -3,7 +3,6 @@ package com.example.bookshop.repository;
 import com.example.bookshop.model.Book;
 import java.util.List;
 import java.util.Optional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
