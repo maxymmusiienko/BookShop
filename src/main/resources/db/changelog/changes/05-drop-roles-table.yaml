@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-roles-table
+      author: root=
+      changes:
+        - dropTable:
+            tableName: roles

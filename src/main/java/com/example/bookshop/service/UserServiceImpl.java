@@ -6,19 +6,18 @@ import com.example.bookshop.exception.RegistrationException;
 import com.example.bookshop.mapper.UserMapper;
 import com.example.bookshop.model.User;
 import com.example.bookshop.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private UserMapper userMapper;
-
+    private final PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
+    private UserMapper userMapper;
 
     @Override
     public UserResponseDto register(RegisterUserRequestDto requestDto)
@@ -26,7 +25,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findUserByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException("Can`t register user: email is already used");
         }
-        User user = userMapper.toModel(requestDto);
+        User user = new User();
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        user.setEmail(requestDto.getEmail());
+        user.setFirstName(requestDto.getFirstName());
+        user.setLastName(requestDto.getLastName());
+        user.setShippingAddress(requestDto.getShippingAddress());
         User userEntity = userRepository.save(user);
         return userMapper.toDto(userEntity);
     }
