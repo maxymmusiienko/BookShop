@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPassword {
-    String message() default "Password must contain minimum eight characters," +
-            " at least one uppercase letter, one lowercase letter and one number";
+    String message() default "Password must contain minimum eight characters,"
+            + " at least one uppercase letter, one lowercase letter and one number";
 
     Class<?>[] groups() default {};
 
