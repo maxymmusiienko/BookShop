@@ -1,6 +1,7 @@
 package com.example.bookshop.service;
 
 import com.example.bookshop.dto.BookDto;
+import com.example.bookshop.dto.BookWithoutCategoriesDto;
 import com.example.bookshop.dto.CreateBookRequestDto;
 import com.example.bookshop.exception.EntityNotFoundException;
 import com.example.bookshop.mapper.BookMapper;
@@ -25,9 +26,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findAll(Pageable pageable) {
+    public List<BookWithoutCategoriesDto> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable).stream()
-                .map(bookMapper::toDto)
+                .map(bookMapper::toBookWithoutCategoriesDto)
                 .toList();
     }
 
@@ -49,5 +50,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<BookDto> findAllByCategory(Pageable pageable, Long id) {
+        return bookRepository.findAllByCategoriesId(pageable, id).stream()
+                .map(bookMapper::toDto)
+                .toList();
     }
 }
