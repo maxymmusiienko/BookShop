@@ -2,6 +2,7 @@ package com.example.bookshop.controller;
 
 import com.example.bookshop.annotations.BookIdParameter;
 import com.example.bookshop.dto.BookDto;
+import com.example.bookshop.dto.BookWithoutCategoriesDto;
 import com.example.bookshop.dto.CreateBookRequestDto;
 import com.example.bookshop.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,12 +29,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
     @GetMapping
     @Operation(summary = "Find all books", description = "This method finds all books")
-    public List<BookDto> findAll(Pageable pageable) {
+    public List<BookWithoutCategoriesDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
@@ -65,7 +64,7 @@ public class BookController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a book", description = "This method soft-deletes a book from DB")
     public void delete(@BookIdParameter @PathVariable Long id) {
@@ -73,7 +72,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public BookDto update(@BookIdParameter @PathVariable Long id,
                           @RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.update(id, requestDto);

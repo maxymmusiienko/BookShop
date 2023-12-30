@@ -1,6 +1,7 @@
 package com.example.bookshop.dto;
 
 import com.example.bookshop.annotations.FieldMatch;
+import com.example.bookshop.annotations.ValidPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -10,15 +11,12 @@ import org.hibernate.validator.constraints.Length;
 @FieldMatch(first = "password", second = "repeatPassword",
         message = "Can`t register a user: password and repeated password are not equals")
 public class RegisterUserRequestDto {
-    @NotBlank
     @Email
     @Length(max = 100)
     private String email;
-    @NotBlank
-    @Length(min = 8, max = 25)
+    @ValidPassword
     private String password;
-    @NotBlank
-    @Length(min = 8, max = 25)
+    @ValidPassword
     private String repeatPassword;
     @NotBlank
     @Length(max = 40)
