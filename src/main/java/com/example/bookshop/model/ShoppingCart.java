@@ -11,6 +11,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.Set;
 import lombok.Data;
+import org.apache.commons.lang3.builder.ToStringExclude;
 
 @Data
 @Entity
@@ -21,6 +22,7 @@ public class ShoppingCart {
     private Long id;
     @OneToOne
     @JoinColumn(name = "user_id", unique = true, nullable = false)
+    @ToStringExclude
     private User user;
     @OneToMany(mappedBy = "shoppingCart", fetch = FetchType.EAGER)
     private Set<CartItem> cartItems;

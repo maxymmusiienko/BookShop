@@ -28,6 +28,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final CartItemMapper cartItemMapper;
     private final ShoppingCartMapper shoppingCartMapper;
 
+    //TODO deal with cart items set
+
     @Override
     public ShoppingCartResponseDto findCart(String email, Pageable pageable) {
         User user = userRepository.findUserByEmail(email)
@@ -38,6 +40,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUser(user);
         }
+        //Set<CartItem> cartItems = cartItemRepository.findAllByShoppingCart(shoppingCart);
+        //shoppingCart.setCartItems(cartItems);
         return shoppingCartMapper.toDto(shoppingCart);
     }
 
@@ -54,19 +58,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 .orElseThrow(() -> new EntityNotFoundException("Can`t find book by id" + bookId));
         cartItem.setBook(book);
         cartItemRepository.save(cartItem);
-        ShoppingCart shoppingCartResponse = shoppingCartRepository.findShoppingCartByUser(user);
-        return shoppingCartMapper.toDto(shoppingCartResponse);
+        return shoppingCartMapper.toDto(shoppingCart);
     }
 
     @Override
     public ShoppingCartResponseDto updateItem(Long id, String email,
                                               UpdateCartItemRequestDto requestDto) {
-        User user = userRepository.findUserByEmail(email)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Can`t find user by email " + email));
         CartItem cartItem = cartItemRepository.findCartItemById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can`t find cart item by id " + id));
+        cartItem.setId(id);
+        cartItem.setQuantity(requestDto.getQuantity());
         cartItemRepository.save(cartItem);
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(
+                    () -> new EntityNotFoundException("Can`t find user by email " + email));
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(user);
         return shoppingCartMapper.toDto(shoppingCart);
     }

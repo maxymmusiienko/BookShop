@@ -74,7 +74,11 @@ public class BookController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public BookDto update(@BookIdParameter @PathVariable Long id,
-                          @RequestBody @Valid CreateBookRequestDto requestDto) {
+                          @Parameter(
+                              name = "requestDto",
+                              description = "This is a update request DTO of a book",
+                              required = true
+                          ) @RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.update(id, requestDto);
     }
 }
