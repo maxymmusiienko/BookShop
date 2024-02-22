@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -46,6 +48,11 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @JoinColumn(name = "shopping_cart_id", nullable = false)
+    @OneToOne(mappedBy = "user")
+    @ToStringExclude
+    private ShoppingCart shoppingCart;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

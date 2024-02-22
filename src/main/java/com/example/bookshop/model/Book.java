@@ -57,6 +57,10 @@ public class Book {
     public Book() {
     }
 
+    public Book(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("Book{");
