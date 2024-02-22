@@ -19,8 +19,7 @@ This is a Spring Boot application designed to manage a bookshop inventory and al
 * Swagger UI for API documentation and testing
 
 ## **Setup Instructions**
-Swagger UI is integrated into the application for easy API documentation and testing.
-Once the application is running, you can access the Swagger UI at SERVER.
+Project will be deployed to AWS soon.
 
 ## **Usage**
 * Use the provided APIs to interact with the application programmatically.
